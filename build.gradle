@@ -88,6 +88,11 @@ checkPropertyExists("containsMixinsAndOrCoreModOnly")
 checkPropertyExists("usesShadowedDependencies")
 checkPropertyExists("developmentEnvironmentUserName")
 
+checkPropertyExists("repositoryURL")
+checkPropertyExists("repositoryName")
+checkPropertyExists("mavenGroupId")
+checkPropertyExists("mavenArtifactId")
+
 
 String javaSourceDir = "src/main/java/"
 String scalaSourceDir = "src/main/scala/"
@@ -153,7 +158,7 @@ configurations.all {
 'git config core.fileMode false'.execute()
 // Pulls version from git tag
 try {
-    version = minecraftVersion + "-" + gitVersion()
+    version = gitVersion() + "-mc" + minecraftVersion
 }
 catch (Exception e) {
     throw new IllegalStateException("This mod must be version controlled by Git AND the repository must provide at least one tag!");
@@ -488,6 +493,25 @@ artifacts {
 }
 
 // publishing
+
+def getMavenSettingsCredentials = {
+    String userHome = System.getProperty( "user.home" );
+    File mavenSettings = new File(userHome, ".m2/settings.xml")
+    def xmlSlurper = new XmlSlurper()
+    def output = xmlSlurper.parse(mavenSettings)
+    return output."servers"."server"
+}
+
+def getCredentials = {
+    def entries = getMavenSettingsCredentials()
+    for (entry in entries) {
+        if ( entry."id".text() == repositoryName ) {
+            return [username: entry.username.text(), password: entry.password.text()]
+        }
+    }
+}
+
+//Publishing
 publishing {
     publications {
         maven(MavenPublication) {
@@ -498,22 +522,20 @@ publishing {
                 artifact source: apiJar, classifier: "api"
             }
 
-            groupId = System.getenv("ARTIFACT_GROUP_ID") ?: group
-            artifactId = System.getenv("ARTIFACT_ID") ?: project.name
-            version = System.getenv("ARTIFACT_VERSION") ?: project.version
+            groupId = mavenGroupId
+            artifactId = mavenArtifactId
+            version = gitVersion()
         }
     }
-    
+
     repositories {
         maven {
-            String owner = System.getenv("REPOSITORY_OWNER") ?: "Unknown"
-            String repositoryName = System.getenv("REPOSITORY_NAME") ?: "Unknown"
-            String githubRepositoryUrl = "https://maven.pkg.github.com/$owner/$repositoryName"
-            name = "GitHubPackages"
-            url = githubRepositoryUrl
+            name = repositoryName
+            url = repositoryURL
+            def creds = getCredentials()
             credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: "NONE"
-                password = System.getenv("GITHUB_TOKEN") ?: "NONE"
+                username = creds == null ? "none" : creds.username
+                password = creds == null ? "none" : creds.password
             }
         }
     }
