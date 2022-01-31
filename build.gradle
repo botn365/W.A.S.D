@@ -1,4 +1,4 @@
-//version: 1641429628-falsepattern
+//version: 1641429628-falsepattern-2
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -503,11 +503,15 @@ def getMavenSettingsCredentials = {
 }
 
 def getCredentials = {
-    def entries = getMavenSettingsCredentials()
-    for (entry in entries) {
-        if ( entry."id".text() == repositoryName ) {
-            return [username: entry.username.text(), password: entry.password.text()]
+    try {
+        def entries = getMavenSettingsCredentials()
+        for (entry in entries) {
+            if (entry."id".text() == repositoryName) {
+                return [username: entry.username.text(), password: entry.password.text()]
+            }
         }
+    } catch (Exception ignored) {
+        return [username: "none", password: "none"]
     }
 }
 
