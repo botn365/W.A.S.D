@@ -1,4 +1,4 @@
-//version: 1641429628falsepattern2
+//version: 1641429628falsepattern3
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -158,7 +158,7 @@ configurations.all {
 'git config core.fileMode false'.execute()
 // Pulls version from git tag
 try {
-    version = gitVersion() + "-mc" + minecraftVersion
+    version = gitVersion()
 }
 catch (Exception e) {
     throw new IllegalStateException("This mod must be version controlled by Git AND the repository must provide at least one tag!");
@@ -171,6 +171,7 @@ if(project.hasProperty("customArchiveBaseName") && customArchiveBaseName) {
 else {
     archivesBaseName = modId
 }
+archivesBaseName += "-mc" + minecraftVersion
 
 minecraft {
     version = minecraftVersion + "-" + forgeVersion + "-" + minecraftVersion
@@ -521,7 +522,7 @@ publishing {
             }
 
             groupId = mavenGroupId
-            artifactId = mavenArtifactId
+            artifactId = mavenArtifactId + "-mc" + minecraftVersion
             version = gitVersion()
         }
     }
