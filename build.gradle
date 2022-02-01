@@ -1,4 +1,4 @@
-//version: 1641429628falsepattern3
+//version: 1641429628falsepattern4
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -88,6 +88,8 @@ checkPropertyExists("containsMixinsAndOrCoreModOnly")
 checkPropertyExists("usesShadowedDependencies")
 checkPropertyExists("developmentEnvironmentUserName")
 
+//Properties added in fork
+checkPropertyExists("skipBuildScriptUpdateCheck")
 checkPropertyExists("repositoryURL")
 checkPropertyExists("repositoryName")
 checkPropertyExists("mavenGroupId")
@@ -549,7 +551,7 @@ task updateBuildScript {
     }
 }
 
-if (isNewBuildScriptVersionAvailable(projectDir.toString())) {
+if (!skipBuildScriptUpdateCheck.toBoolean() && isNewBuildScriptVersionAvailable(projectDir.toString())) {
     if (autoUpdateBuildScript.toBoolean()) {
         performBuildScriptUpdate(projectDir.toString())
     } else {
