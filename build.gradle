@@ -1,4 +1,4 @@
-//version: 1641429628falsepattern4
+//version: 1641429628falsepattern5
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -200,11 +200,11 @@ minecraft {
 
     if(usesMixins.toBoolean()) {
         arguments += [
-                "--mods=../build/libs/$modId-${version}.jar",
-                "--tweakClass org.spongepowered.asm.launch.MixinTweaker"
+                "--mods=../build/libs/$modId-${version}.jar".toString(),
+                "--tweakClass org.spongepowered.asm.launch.MixinTweaker".toString()
         ]
         jvmArguments += [
-                "-Dmixin.debug=true", "-Dmixin.debug.countInjections=true", "-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true"
+                "-Dmixin.debug=true", "-Dmixin.debug.countInjections=true", "-Dmixin.debug.verbose=true", "-Dmixin.debug.export=true".toString()
         ]
     }
 
