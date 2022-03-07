@@ -1,4 +1,4 @@
-//version: 1641429628falsepattern10
+//version: 1641429628falsepattern11
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -94,6 +94,7 @@ checkPropertyExists("repositoryURL")
 checkPropertyExists("repositoryName")
 checkPropertyExists("mavenGroupId")
 checkPropertyExists("mavenArtifactId")
+checkPropertyExists("hasMixinDeps")
 
 
 String javaSourceDir = "src/main/java/"
@@ -213,7 +214,7 @@ repositories {
         name = "Overmind forge repo mirror"
         url = "https://gregtech.overminddl1.com/"
     }
-    if(usesMixins.toBoolean()) {
+    if(usesMixins.toBoolean() || hasMixinDeps.toBoolean()) {
         maven {
             name = "sponge"
             url = "https://sponge.falsepattern.com/"
@@ -328,7 +329,7 @@ runClient {
     def arguments = []
     def jvmArguments = []
 
-    if(usesMixins.toBoolean()) {
+    if(usesMixins.toBoolean() || hasMixinDeps.toBoolean()) {
         arguments += [
                 "--mods=../build/libs/$archivesBaseName-${version}.jar",
                 "--tweakClass", "org.spongepowered.asm.launch.MixinTweaker"
@@ -353,7 +354,7 @@ runServer {
     def arguments = []
     def jvmArguments = []
 
-    if (usesMixins.toBoolean()) {
+    if (usesMixins.toBoolean() || hasMixinDeps.toBoolean()) {
         arguments += [
                 "--mods=../build/libs/$archivesBaseName-${version}.jar",
                 "--tweakClass", "org.spongepowered.asm.launch.MixinTweaker"
