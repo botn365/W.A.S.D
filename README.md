@@ -5,6 +5,16 @@
 
 An example mod for Minecraft 1.7.10 with Forge focussed on a stable, updatable setup.
 
+# NOTICE
+### This fork will not diverge from upstream. The only changes are:
+
+- Removed jitpack
+- Removed github publishing
+- Added proper maven repo publishing
+- Modified version string. Instead of 1.7.10-version, it's version-mc1.7.10, for SemVer compatibility.
+
+If upstream receives any update, this repo will also update to include said changes.
+
 ### Motivation
 
 We had our fair share in struggles with build scripts for Minecraft Forge. There are quite a few pitfalls from non-obvious error messages. This Example Project provides you a build system you can adapt to over 90% of Minecraft Forge mods and can easily be updated if need be.
