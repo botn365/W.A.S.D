@@ -2,6 +2,6 @@
 
 repositories {
     maven {
-        url = "https://jitpack.io"
+        url = "https://gtmega.falsepattern.com/"
     }
 }

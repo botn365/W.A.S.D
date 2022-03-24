@@ -1,4 +1,4 @@
-package com.myname.mymodid.mixins.minecraft;
+package com.myname.mymodid.mixin.mixins.common.minecraft;
 
 import com.myname.mymodid.MyMod;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+//Example vanilla mixin
 @Mixin(value = ItemEditableBook.class)
 public class ItemEditableBookMixin {
 

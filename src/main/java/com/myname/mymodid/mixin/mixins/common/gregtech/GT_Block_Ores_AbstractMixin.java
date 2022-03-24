@@ -1,4 +1,4 @@
-package com.myname.mymodid.mixins.gregtech;
+package com.myname.mymodid.mixin.mixins.common.gregtech;
 
 import com.myname.mymodid.MyMod;
 import gregtech.api.items.GT_Generic_Block;
@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
+//Example modded mixin
 @Mixin(value = GT_Block_Ores_Abstract.class, remap = false)
 public class GT_Block_Ores_AbstractMixin extends GT_Generic_Block {
 

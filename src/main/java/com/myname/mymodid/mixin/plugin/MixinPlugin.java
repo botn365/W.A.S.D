@@ -1,4 +1,4 @@
-package com.myname.mymodid.mixinplugin;
+package com.myname.mymodid.mixin.plugin;
 
 import com.myname.mymodid.Tags;
 import net.minecraft.launchwrapper.Launch;
@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-import ru.timeconqueror.spongemixins.MinecraftURLClassPath;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,12 +18,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.myname.mymodid.mixinplugin.TargetedMod.VANILLA;
 import static java.nio.file.Files.walk;
 
 public class MixinPlugin implements IMixinConfigPlugin {
 
-    private static final Logger LOG = LogManager.getLogger(Tags.MODID + " mixins");
+    private static final Logger LOG = LogManager.getLogger(Tags.MODID + "mixin");
     private static final Path MODS_DIRECTORY_PATH = new File(Launch.minecraftHome, "mods/").toPath();
 
     @Override
@@ -50,13 +48,12 @@ public class MixinPlugin implements IMixinConfigPlugin {
     // This method return a List<String> of mixins. Every mixins in this list will be loaded.
     @Override
     public List<String> getMixins() {
-        final boolean isDevelopmentEnvironment = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+        boolean isDevelopmentEnvironment = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
         List<TargetedMod> loadedMods = Arrays.stream(TargetedMod.values())
-                .filter(mod -> mod == VANILLA
-                        || (mod.loadInDevelopment && isDevelopmentEnvironment)
-                        || loadJarOf(mod))
-                .collect(Collectors.toList());
+                               .filter(mod -> (mod.loadInDevelopment && isDevelopmentEnvironment)
+                                              || loadJarOf(mod))
+                               .collect(Collectors.toList());
 
         for (TargetedMod mod : TargetedMod.values()) {
             if(loadedMods.contains(mod)) {
@@ -70,8 +67,9 @@ public class MixinPlugin implements IMixinConfigPlugin {
         List<String> mixins = new ArrayList<>();
         for (Mixin mixin : Mixin.values()) {
             if (mixin.shouldLoad(loadedMods)) {
-                mixins.add(mixin.mixinClass);
-                LOG.debug("Loading mixin: " + mixin.mixinClass);
+                String mixinClass = mixin.mixin;
+                mixins.add(mixinClass);
+                LOG.info("Loading mixin: " + mixinClass);
             }
         }
         return mixins;
