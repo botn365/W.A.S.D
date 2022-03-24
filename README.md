@@ -73,12 +73,12 @@ dependencies' repositories. This is separate from the main build script, so you 
 A simple CI script that will build your mod any time it is pushed to `master` or `main` and publish the result as
 release in your repository. This feature is free with GitHub if your repository is public.
 
-### Forge's Access Transformers (Not in this fork yet)
+### Forge's Access Transformers
 
 You may activate Forge's Access Transformers by defining a configuration file in `gradle.properties`.
 
 Check out the
-[`example-access-transformers`](https://github.com/SinTh0r4s/ExampleMod1.7.10/tree/example-access-transformers) branch
+[`example-access-transformers`](https://github.com/FalsePattern/ExampleMod1.7.10/tree/example-access-transformers) branch
 for a working example!
 
 __Warning:__ Access Transformers are bugged and will deny you any sources for the decompiled minecraft! Your development
