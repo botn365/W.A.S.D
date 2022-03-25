@@ -38,7 +38,7 @@ public enum Mixin {
 
     Mixin(Side side, Predicate<List<TargetedMod>> modFilter, String mixin) {
         this.side = side;
-        this.mixin = mixin;
+        this.mixin = side.name().toLowerCase() + "." + mixin;
         this.filter = modFilter;
     }
 
