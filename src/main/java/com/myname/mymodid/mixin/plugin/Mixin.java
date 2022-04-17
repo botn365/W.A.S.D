@@ -1,14 +1,18 @@
 package com.myname.mymodid.mixin.plugin;
 
-import cpw.mods.fml.relauncher.FMLLaunchHandler;
+import com.falsepattern.lib.mixin.IMixin;
+import com.falsepattern.lib.mixin.ITargetedMod;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
+import static com.falsepattern.lib.mixin.IMixin.PredicateHelpers.*;
 import static com.myname.mymodid.mixin.plugin.TargetedMod.*;
 
-public enum Mixin {
+@RequiredArgsConstructor
+public enum Mixin implements IMixin {
 
     //
     // IMPORTANT: Do not make any references to any mod from this file. This file is loaded quite early on and if
@@ -32,46 +36,10 @@ public enum Mixin {
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and match multiple predicates.
     ;
 
+    @Getter
     public final Side side;
+    @Getter
+    public final Predicate<List<ITargetedMod>> filter;
+    @Getter
     public final String mixin;
-    public final Predicate<List<TargetedMod>> filter;
-
-    Mixin(Side side, Predicate<List<TargetedMod>> modFilter, String mixin) {
-        this.side = side;
-        this.mixin = side.name().toLowerCase() + "." + mixin;
-        this.filter = modFilter;
-    }
-
-    public boolean shouldLoad(List<TargetedMod> loadedMods) {
-        return (side == Side.COMMON
-                || side == Side.SERVER && FMLLaunchHandler.side().isServer()
-                || side == Side.CLIENT && FMLLaunchHandler.side().isClient())
-               && filter.test(loadedMods);
-    }
-
-    private static Predicate<List<TargetedMod>> never() {
-        return (list) -> false;
-    }
-
-    private static Predicate<List<TargetedMod>> condition(Supplier<Boolean> condition) {
-        return (list) -> condition.get();
-    }
-
-    private static Predicate<List<TargetedMod>> always() {
-        return (list) -> true;
-    }
-
-    private static Predicate<List<TargetedMod>> require(TargetedMod mod) {
-        return (list) -> list.contains(mod);
-    }
-
-    private static Predicate<List<TargetedMod>> avoid(TargetedMod mod) {
-        return (list) -> !list.contains(mod);
-    }
-
-    private enum Side {
-        COMMON,
-        CLIENT,
-        SERVER
-    }
 }

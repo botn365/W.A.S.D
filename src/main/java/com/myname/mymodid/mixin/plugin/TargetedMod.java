@@ -1,12 +1,15 @@
 package com.myname.mymodid.mixin.plugin;
 
-import com.google.common.io.Files;
+import com.falsepattern.lib.mixin.ITargetedMod;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import java.nio.file.Path;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
-public enum TargetedMod {
+import static com.falsepattern.lib.mixin.ITargetedMod.PredicateHelpers.*;
+
+@RequiredArgsConstructor
+public enum TargetedMod implements ITargetedMod {
 
     //
     // IMPORTANT: Do not make any references to any mod from this file. This file is loaded quite early on and if
@@ -17,41 +20,10 @@ public enum TargetedMod {
     // Replace with your injected mods here:
     GREGTECH("GregTech", false, startsWith("gregtech").or(startsWith("gt5u")));
 
+    @Getter
     public final String modName;
-    public final Predicate<String> condition;
+    @Getter
     public final boolean loadInDevelopment;
-
-    TargetedMod(String modName, boolean loadInDevelopment, Predicate<String> condition) {
-        this.modName = modName;
-        this.condition = condition;
-        this.loadInDevelopment = loadInDevelopment;
-    }
-
-    private static Predicate<String> startsWith(String subString) {
-        return (name) -> name.startsWith(subString);
-    }
-
-    private static Predicate<String> contains(String subString) {
-        return (name) -> name.contains(subString);
-    }
-
-    private static Predicate<String> matches(String regex) {
-        return (name) -> name.matches(regex);
-    }
-
-    @SuppressWarnings("UnstableApiUsage")
-    public boolean isMatchingJar(Path path) {
-        String pathString = path.toString();
-        String nameLowerCase = Files.getNameWithoutExtension(pathString).toLowerCase();
-        String fileExtension = Files.getFileExtension(pathString);
-
-        return "jar".equals(fileExtension) && condition.test(nameLowerCase);
-    }
-
-    @Override
-    public String toString() {
-        return "TargetedMod{" +
-               "modName='" + modName + '\'' +
-               '}';
-    }
+    @Getter
+    public final Predicate<String> condition;
 }
