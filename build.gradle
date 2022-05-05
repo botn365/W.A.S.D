@@ -1,4 +1,4 @@
-//version: 1641429628falsepattern14
+//version: 1641429628falsepattern15
 /*
 DO NOT CHANGE THIS FILE!
 
@@ -563,7 +563,7 @@ publishing {
         maven(MavenPublication) {
             artifact source: (jar.enabled ? jar : shadowJar)
             artifact source: sourcesJar, classifier: "src"
-            artifact source: devJar, classifier: "dev"
+            artifact source: (devJar.enabled ? devJar : shadowDevJar), classifier: "dev"
             if (apiPackage) {
                 artifact source: apiJar, classifier: "api"
             }
