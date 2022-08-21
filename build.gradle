@@ -280,7 +280,8 @@ task generateAssets {
 
 task relocateShadowJar(type: ConfigureShadowRelocation) {
     target = tasks.shadowJar
-    prefix = modGroup + ".shadow"
+    //prefix = modGroup + ".shadow"
+    prefix = ""
 }
 
 shadowJar {
@@ -296,7 +297,7 @@ shadowJar {
 
     minimize()  // This will only allow shading for actually used classes
     configurations = [project.configurations.shadowImplementation, project.configurations.shadowCompile]
-    dependsOn(relocateShadowJar)
+//    dependsOn(relocateShadowJar)
 }
 
 jar {
@@ -475,7 +476,8 @@ task shadowDevJar(type: ShadowJar) {
 
 task relocateShadowDevJar(type: ConfigureShadowRelocation) {
     target = tasks.shadowDevJar
-    prefix = modGroup + ".shadow"
+    //prefix = modGroup + ".shadow"
+    prefix = ""
 }
 
 task circularResolverJar(type: Jar) {
