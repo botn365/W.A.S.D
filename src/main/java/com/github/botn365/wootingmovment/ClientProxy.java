@@ -9,8 +9,6 @@ public class ClientProxy extends CommonProxy {
     // etc, and register them with the GameRegistry."
     public void preInit(FMLPreInitializationEvent event) 	{
         Config.syncronizeConfiguration(event.getSuggestedConfigurationFile());
-        WootingMovment.info(Config.greeting);
-        WootingMovment.info("I am " + Tags.MODNAME + " at version " + Tags.VERSION + " and group name " + Tags.GROUPNAME);
         WootingInit.init();
     }
 

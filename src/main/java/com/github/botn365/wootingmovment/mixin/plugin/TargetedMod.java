@@ -17,6 +17,8 @@ public enum TargetedMod implements ITargetedMod {
     // Exception: Tags.java, as long as it is used for Strings only!
     //
 
+    PLAYERAPI("PlayerApi",false,startsWith("PlayerApi")),
+
     // Replace with your injected mods here:
     ;
 

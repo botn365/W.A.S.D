@@ -8,7 +8,7 @@ import static com.github.botn365.main.WootingAnalogWrapper.WootingAnalogDeviceEv
 import static com.github.botn365.main.WootingAnalogWrapper.WootingAnalogDeviceType.WootingAnalog_DeviceType_Keyboard;
 
 public class WootingInit {
-    static long deviceID;
+    private static long deviceID;
     private static boolean initialised = false;
 
     public static void init() {
