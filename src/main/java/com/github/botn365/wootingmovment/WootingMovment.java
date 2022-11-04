@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
      version = Tags.VERSION,
      name = Tags.MODNAME,
      acceptedMinecraftVersions = "[1.7.10]",
+     //acceptableRemoteVersions = "*",
      dependencies = "required-after:falsepatternlib@[0.5.0,);")
 public class WootingMovment {
 

@@ -1,6 +1,5 @@
 package com.github.botn365.wootingmovment;
 
-import com.falsepattern.lib.FalsePatternLib;
 import cpw.mods.fml.common.event.*;
 
 public class ClientProxy extends CommonProxy {
