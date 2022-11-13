@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalogDevice;
+import static com.github.botn365.wootingmovment.Settings.*;
 import static net.minecraft.client.Minecraft.getMinecraft;
 
 //Example vanilla mixin
@@ -34,11 +35,10 @@ abstract class MovementInputFromOptionsMixin extends MovementInput {
         val deviceID = WootingInit.getDeviceID();
         this.moveForward = 0;
         this.moveStrafe = 0;
-        val c = Settings.defaultCurve;
-        float w = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID));
-        float s = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID));
-        float a = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID));
-        float d = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID));
+        float w = getResponseCurve(FORWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID));
+        float s = getResponseCurve(BACKWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID));
+        float a = getResponseCurve(LEFT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID));
+        float d = getResponseCurve(RIGHT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID));
         if (w > 0.05) {
             this.moveForward += w;
         }

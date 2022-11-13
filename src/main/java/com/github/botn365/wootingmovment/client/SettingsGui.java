@@ -112,8 +112,56 @@ public class SettingsGui extends GuiScreen {
             case 7:
                 increaseSelection();
                 break;
+            case 8:
+                resetCurve();
+                break;
+            case 9:
+                resetAllCurves();
+                break;
         }
 
+    }
+
+    protected void initGraphsSetting(int y) {
+        texts.add(new GuiText("Response Curve Settings",10,y+10));
+        texts.add(new GuiText("Global Curve",80,y+30));
+        texts.add(new GuiText("Movement Curve",80,y+55));
+        texts.add(new GuiText("Flight Curve",80,y+80));
+        buttonList.add(new GuiButton(3,10,y + 25,60,20,stateGlobal.name()));
+        movementButton = new GuiButton(4,10,y + 50,60,20,stateMovement.name());
+        flightButton = new GuiButton(5,10,y + 75,60,20,stateFlight.name());
+        decreaseButton = new GuiButton(6,168,y+50,20,20,"<");
+        increaseButton = new GuiButton(7,292,y+50,20,20,">");
+        curve = new ResponseGraphGui(defaultCurve,190,y + 25,100,70,10,"Global Default");
+        buttonList.add(new GuiButton(8,188,y + 100,40,13,"RESRET"));
+        buttonList.add(new GuiButton(9,233,y + 100,60,13,"RESRET ALL"));
+        if (stateGlobal == State.Unified) {
+            otherButtonState(false);
+            decreaseButton.visible = false;
+            increaseButton.visible = false;
+        } else {
+            curveSelection = 1;
+            curve.setResponseCurve(movementCurves.get(0));
+        }
+        buttonList.add(decreaseButton);
+        buttonList.add(increaseButton);
+        buttonList.add(movementButton);
+        buttonList.add(flightButton);
+        setNewSelection();
+    }
+
+    protected void resetCurve() {
+        curve.resetCurve();
+    }
+
+    protected void resetAllCurves() {
+        resetPointsToDefault(defaultCurve);
+        for (val curve : movementCurves) {
+            resetPointsToDefault(curve);
+        }
+        for (val curve : flightCurves) {
+            resetPointsToDefault(curve);
+        }
     }
 
     protected void setNewSelection() {
@@ -237,31 +285,6 @@ public class SettingsGui extends GuiScreen {
             curve.setResponseCurve(flightCurves.get(value-8));
         }
         curve.setName(curveNames[value]);
-    }
-
-    protected void initGraphsSetting(int y) {
-        texts.add(new GuiText("Response Curve Settings",10,y+10));
-        texts.add(new GuiText("Global Curve",80,y+30));
-        texts.add(new GuiText("Movement Curve",80,y+55));
-        texts.add(new GuiText("Flight Curve",80,y+80));
-        buttonList.add(new GuiButton(3,10,y + 25,60,20,stateGlobal.name()));
-        movementButton = new GuiButton(4,10,y + 50,60,20,stateMovement.name());
-        flightButton = new GuiButton(5,10,y + 75,60,20,stateFlight.name());
-        decreaseButton = new GuiButton(6,168,y+50,20,20,"<");
-        increaseButton = new GuiButton(7,292,y+50,20,20,">");
-        curve = new ResponseGraphGui(defaultCurve,190,y + 25,100,70,10,"Global Default");
-        if (stateGlobal == State.Unified) {
-            otherButtonState(false);
-            decreaseButton.visible = false;
-            increaseButton.visible = false;
-        } else {
-            curveSelection = 1;
-            curve.setResponseCurve(movementCurves.get(0));
-        }
-        buttonList.add(decreaseButton);
-        buttonList.add(increaseButton);
-        buttonList.add(movementButton);
-        buttonList.add(flightButton);
     }
 
     protected void otherButtonState(boolean state) {

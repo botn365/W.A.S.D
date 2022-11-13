@@ -15,13 +15,13 @@ public class ResponseGraphGui extends Gui {
     float pointSize;
     String name;
     int color = 14737632;
-    ResponseCurve response;
+    ResponseCurve responseCurve;
 
 
     //TODO reset button
 
     public ResponseGraphGui(ResponseCurve response, int lx, int ly, int lw, int lh, float pointSize, String name) {
-        this.response = response;
+        this.responseCurve = response;
         this.lx = lx;
         this.ly = ly + 10;
         this.lw = lw;
@@ -35,7 +35,7 @@ public class ResponseGraphGui extends Gui {
         drawBackground(lx,ly,lx + lw,ly + lh,0.1f,0.1f,0.1f,1);
         drawGrid();
         drawBottom();
-        val points = response.getPoints();
+        val points = responseCurve.getPoints();
         for (int i = 0; i < points.size()-1; i++) {
             val pointA = points.get(i);
             val pointB = points.get(i+1);
@@ -45,11 +45,15 @@ public class ResponseGraphGui extends Gui {
     }
 
     public void setResponseCurve(ResponseCurve response) {
-        this.response = response;
+        this.responseCurve = response;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void resetCurve() {
+        Settings.resetPointsToDefault(responseCurve);
     }
 
     protected int held;
@@ -60,7 +64,7 @@ public class ResponseGraphGui extends Gui {
 
     public void mouseClickMove(int x, int y, int p_146273_3_, long p_146273_4_) {
         if (held > -1) {
-            val rez = response.getPoints();
+            val rez = responseCurve.getPoints();
             int maxSize = rez.size()-1;
             int xMax = held == maxSize ? lx + lw : normalizeX(rez.get(held+1).x);
             int xMin = held == 0 ? lx : normalizeX(rez.get(held-1).x);
@@ -85,7 +89,7 @@ public class ResponseGraphGui extends Gui {
     }
 
     protected int isOverAPoint(int x, int y) {
-        val resp = response.getPoints();
+        val resp = responseCurve.getPoints();
         for (int i = 0; i < resp.size(); i++) {
             if (isOverPoint(x,y,resp.get(i))) {
                 return i;
@@ -171,7 +175,7 @@ public class ResponseGraphGui extends Gui {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glColor4f(0.9f,0.9f,0,1);
         tes.startDrawingQuads();
-        val rez = response.getPoints();
+        val rez = responseCurve.getPoints();
         for (int i = 0; i < rez.size()-1; i++) {
             addBottomDraw(rez.get(i),rez.get(i+1));
         }
