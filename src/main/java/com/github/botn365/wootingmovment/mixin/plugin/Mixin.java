@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 
 import static com.falsepattern.lib.mixin.IMixin.PredicateHelpers.*;
 import static com.github.botn365.main.WootingAnalogWrapper.WootingAnalogResult.*;
+import static com.github.botn365.wootingmovment.mixin.plugin.TargetedMod.DWS;
 import static com.github.botn365.wootingmovment.mixin.plugin.TargetedMod.PLAYERAPI;
 
 @RequiredArgsConstructor
@@ -30,6 +31,7 @@ public enum Mixin implements IMixin {
     MovementMixin(Side.CLIENT, condition(Mixin::hasSDK), "minecraft.MovementInputFromOptionsMixin"),
     FleightMixin(Side.CLIENT,avoid(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPMixin"),
     FleightMixinPlayerApi(Side.CLIENT,require(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPPlayerApiMixin"),
+    DWSAnalogSelect(Side.CLIENT,require(DWS).and(condition(Mixin::hasSDK)),"minecraft.MinecraftMixin")
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and match multiple predicates.
     ;
     //

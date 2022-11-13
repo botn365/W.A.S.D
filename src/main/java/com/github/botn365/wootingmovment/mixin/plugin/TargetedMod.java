@@ -18,6 +18,7 @@ public enum TargetedMod implements ITargetedMod {
     //
 
     PLAYERAPI("PlayerApi",false,startsWith("PlayerApi")),
+    DWS("dws",false,startsWith("dws-")),
 
     // Replace with your injected mods here:
     ;

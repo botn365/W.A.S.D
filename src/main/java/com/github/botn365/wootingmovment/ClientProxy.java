@@ -1,5 +1,6 @@
 package com.github.botn365.wootingmovment;
 
+import com.github.botn365.wootingmovment.client.KeyBindings;
 import cpw.mods.fml.common.event.*;
 
 public class ClientProxy extends CommonProxy {
@@ -7,6 +8,7 @@ public class ClientProxy extends CommonProxy {
     // preInit "Run before anything else. Read your config, create blocks, items,
     // etc, and register them with the GameRegistry."
     public void preInit(FMLPreInitializationEvent event) 	{
+        KeyBindings.registerKeyBindfings();
         Config.syncronizeConfiguration(event.getSuggestedConfigurationFile());
         WootingInit.init();
     }

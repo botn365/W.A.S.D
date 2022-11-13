@@ -1,5 +1,6 @@
 package com.github.botn365.wootingmovment.mixin.mixins.client.minecraft;
 
+import com.github.botn365.wootingmovment.Settings;
 import com.github.botn365.wootingmovment.WootingInit;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
@@ -24,7 +25,7 @@ public abstract class EntitiyPlayerSPPlayerApiMixin extends AbstractClientPlayer
 
     @ModifyExpressionValue(method = "localOnLivingUpdate", at = @At(value = "FIELD",target = "Lnet/minecraft/entity/player/PlayerCapabilities;isFlying:Z",ordinal = 1,opcode = Opcodes.GETFIELD),require = 1)
     public boolean cancelFleigtMovment(boolean original) {
-        if (original && WootingInit.isInit() && this.mc.currentScreen == null) {
+        if (original && WootingInit.isInit() && this.mc.currentScreen == null && Settings.fleightEnabled) {
             val deviceID = WootingInit.getDeviceID();
             this.motionY += wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindJump.getKeyCode(),deviceID) * 0.15;
             this.motionY -= wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindSneak.getKeyCode(),deviceID) * 0.15;

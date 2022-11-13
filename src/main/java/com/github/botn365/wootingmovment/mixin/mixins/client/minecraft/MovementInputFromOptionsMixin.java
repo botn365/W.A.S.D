@@ -1,5 +1,6 @@
 package com.github.botn365.wootingmovment.mixin.mixins.client.minecraft;
 
+import com.github.botn365.wootingmovment.Settings;
 import com.github.botn365.wootingmovment.WootingInit;
 import lombok.val;
 import net.minecraft.client.settings.GameSettings;
@@ -23,7 +24,7 @@ abstract class MovementInputFromOptionsMixin extends MovementInput {
     @Inject(method = "updatePlayerMoveState",at = @At(value = "HEAD"),cancellable = true,require = 1)
     public void updatePlayerMove(CallbackInfo ci) {
         val gui = getMinecraft().currentScreen;
-        if (WootingInit.isInit() && gui == null) {
+        if (WootingInit.isInit() && gui == null && Settings.movementEnabled){
             wootingMovment();
             ci.cancel();
         }
@@ -33,11 +34,11 @@ abstract class MovementInputFromOptionsMixin extends MovementInput {
         val deviceID = WootingInit.getDeviceID();
         this.moveForward = 0;
         this.moveStrafe = 0;
-        ;
-        float w = wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID);
-        float s = wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID);
-        float a = wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID);
-        float d = wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID);
+        val c = Settings.defaultCurve;
+        float w = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID));
+        float s = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID));
+        float a = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID));
+        float d = c.translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID));
         if (w > 0.05) {
             this.moveForward += w;
         }

@@ -52,6 +52,8 @@ public class WootingInit {
         return false;
     }
 
+    public static float[] oldValues = new float[]{0,0,0,0,0,0,0,0,0};
+
     public static boolean isInit() {
         return initialised;
     }
