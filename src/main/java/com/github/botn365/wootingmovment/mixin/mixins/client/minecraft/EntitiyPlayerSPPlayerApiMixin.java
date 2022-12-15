@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalogDevice;
+import static com.github.botn365.wootingmovment.Settings.*;
 
 @Mixin(value = EntityPlayerSP.class)
 public abstract class EntitiyPlayerSPPlayerApiMixin extends AbstractClientPlayer {
@@ -27,8 +28,8 @@ public abstract class EntitiyPlayerSPPlayerApiMixin extends AbstractClientPlayer
     public boolean cancelFleigtMovment(boolean original) {
         if (original && WootingInit.isInit() && this.mc.currentScreen == null && Settings.fleightEnabled) {
             val deviceID = WootingInit.getDeviceID();
-            this.motionY += wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindJump.getKeyCode(),deviceID) * 0.15;
-            this.motionY -= wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindSneak.getKeyCode(),deviceID) * 0.15;
+            this.motionY += getResponseCurve(UP).translate(wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindJump.getKeyCode(),deviceID)) * 0.15;
+            this.motionY -= getResponseCurve(DOWN).translate(wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindSneak.getKeyCode(),deviceID)) * 0.15;
             return false;
         }
         return original;
