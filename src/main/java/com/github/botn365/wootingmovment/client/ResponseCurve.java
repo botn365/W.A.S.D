@@ -77,7 +77,7 @@ public class ResponseCurve {
         }
         int index = 0;
         while (pos1 < pos2 && index < points.size()) {
-            pos1 = points.get(index++).fromString(input.substring(pos1, pos2));
+            pos1 += points.get(index++).fromString(input.substring(pos1, pos2));
         }
         return pos2;
     }

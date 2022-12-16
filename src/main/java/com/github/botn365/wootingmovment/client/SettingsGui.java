@@ -1,5 +1,7 @@
 package com.github.botn365.wootingmovment.client;
 
+import com.github.botn365.wootingmovment.Config;
+import com.github.botn365.wootingmovment.Settings;
 import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -42,6 +44,7 @@ public class SettingsGui extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
+        curveSelection = curveSelected;
         val mc = Minecraft.getMinecraft();
         buttonList.add(new GuiButtonState(1,10,20,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
         buttonList.add(new GuiButtonState(2,10,45,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
@@ -318,6 +321,8 @@ public class SettingsGui extends GuiScreen {
             if (child == null) {
                 this.mc.displayGuiScreen((GuiScreen)null);
                 this.mc.setIngameFocus();
+                curveSelected = curveSelection;
+                Config.save();
             } else {
                 this.mc.displayGuiScreen(this);
             }
