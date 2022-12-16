@@ -23,9 +23,10 @@ public class KeyBindings {
     @SubscribeEvent
     public void keyPressEvent(InputEvent.KeyInputEvent event) {
         if (openInventory.isPressed()) {
-            System.out.println("button pressed");
-            Minecraft.getMinecraft().displayGuiScreen(new SettingsGui());
-            //open gui
+            if (Minecraft.getMinecraft().currentScreen == null) {
+                Minecraft.getMinecraft().displayGuiScreen(new SettingsGui());
+                //open gui
+            }
         }
     }
 }
