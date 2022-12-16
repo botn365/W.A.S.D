@@ -28,7 +28,7 @@ public class KeyBoardSelect implements Selection {
     }
 
     @Override
-    public void select() {
-        WootingInit.setDeviceID(keyBoard.deviceId);
+    public boolean select() {
+        return WootingInit.setDeviceIDSave(keyBoard.deviceId);
     }
 }

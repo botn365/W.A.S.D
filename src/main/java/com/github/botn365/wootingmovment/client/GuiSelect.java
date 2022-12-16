@@ -165,8 +165,9 @@ public class GuiSelect extends Gui {
             int len = 30;
             for (val sel : selections) {
                 if (isHoveringOver(x1,y1,len,sel.length() * 10)) {
-                    current = sel;
-                    sel.select();
+                    if (sel.select()) {
+                        current = sel;
+                    }
                     break;
                 }
                 len += sel.length()*10+5;

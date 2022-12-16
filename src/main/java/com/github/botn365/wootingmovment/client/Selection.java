@@ -5,5 +5,5 @@ public interface Selection {
 
     int length();
 
-    void select();
+    boolean select();
 }

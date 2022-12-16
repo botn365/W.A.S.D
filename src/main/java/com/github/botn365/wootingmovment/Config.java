@@ -1,5 +1,6 @@
 package com.github.botn365.wootingmovment;
 
+import lombok.val;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -40,6 +41,8 @@ public class Config {
     public static final String enableMovement = "enable_movement";
     public static final String enableFlight = "enable_flight";
 
+    public static final String lastDeviceID = "keyboard_device_id";
+
     public static Configuration configuration;
 
     public static final String DEFAULT_CURVE = "[(0:0)(0.33:0.33)(0.66:0.66)(1:1)]";
@@ -67,6 +70,12 @@ public class Config {
         Settings.movementEnabled = configuration.get("enable/disable",enableMovement,true).getBoolean();
         Settings.fleightEnabled = configuration.get("enable/disable",enableFlight,true).getBoolean();
 
+        try {
+            val st = configuration.get("device", lastDeviceID,"-1").getString();
+            Long devId = new Long(st);
+            WootingInit.setDeviceIDSave(devId);
+        } catch (NumberFormatException ignored) {}
+
         if(configuration.hasChanged()) {
             configuration.save();
         }
@@ -90,8 +99,10 @@ public class Config {
         configuration.get("curveSelection",stateMovement, Settings.State.Unified.toString()).set(Settings.stateMovement.name());
         configuration.get("curveSelection",stateFlight, Settings.State.Unified.toString()).set(Settings.stateFlight.name());
 
-         configuration.get("enable/disable",enableMovement,true).set(Settings.movementEnabled);
-         configuration.get("enable/disable",enableFlight,true).set(Settings.fleightEnabled);
+        configuration.get("enable/disable",enableMovement,true).set(Settings.movementEnabled);
+        configuration.get("enable/disable",enableFlight,true).set(Settings.fleightEnabled);
+
+        configuration.get("device", lastDeviceID,"-1").set(Long.toString(WootingInit.getDeviceID()));
 
         configuration.save();
 

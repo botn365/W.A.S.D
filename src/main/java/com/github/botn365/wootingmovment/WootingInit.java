@@ -90,4 +90,14 @@ public class WootingInit {
     public static void setDeviceID(long id) {
         deviceID = id;
     }
+
+    public static boolean setDeviceIDSave(long id) {
+        for (val dev : devices) {
+            if (dev != null && dev.deviceId == id) {
+                deviceID = id;
+                return true;
+            }
+        }
+        return false;
+    }
 }
