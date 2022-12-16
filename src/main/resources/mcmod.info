@@ -2,7 +2,7 @@
     {
       "modid": "${modId}",
       "name": "${modName}",
-      "description": "Analog movment using wooting keyboards",
+      "description": "Analog movement using wooting keyboards",
       "version": "${modVersion}",
       "mcversion": "${minecraftVersion}",
       "url": "",
