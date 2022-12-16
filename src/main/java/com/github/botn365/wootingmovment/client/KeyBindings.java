@@ -1,9 +1,11 @@
 package com.github.botn365.wootingmovment.client;
 
+import com.github.botn365.wootingmovment.WootingInit;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
@@ -24,8 +26,30 @@ public class KeyBindings {
     public void keyPressEvent(InputEvent.KeyInputEvent event) {
         if (openInventory.isPressed()) {
             if (Minecraft.getMinecraft().currentScreen == null) {
-                Minecraft.getMinecraft().displayGuiScreen(new SettingsGui());
-                //open gui
+                val value = WootingInit.error.value;
+                if (value <= -1990 && value >= -1997) {
+                    //show error messege that game needs restart
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiError(new String[]{
+                            "Critical Error Game needs restart after fixed",
+                            "Error message: "+WootingInit.error.name()
+                    }));
+                } else if (value < 1) {
+                    Minecraft.getMinecraft().displayGuiScreen(new GuiError(new String[]{
+                            "Non Critical Error Re-open gui to after fix",
+                            "Error message: "+WootingInit.error.name()
+                    }));
+                } else {
+                    if (!WootingInit.isInit()) WootingInit.init();
+                    if (!WootingInit.isInit()) {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiError(new String[]{
+                                "Not initialised but was initialised",
+                                "But got uninitialised And cant re-initialised",
+                                "Error message: "+WootingInit.error.name()
+                        }));
+                    } else {
+                        Minecraft.getMinecraft().displayGuiScreen(new SettingsGui());
+                    }
+                }
             }
         }
     }
