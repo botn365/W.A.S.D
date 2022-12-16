@@ -60,7 +60,6 @@ public class Config {
         Settings.flightCurves.get(1).fromString(configuration.get("responseCurves",downFlightResponseCurve, DEFAULT_CURVE).getString());
         Settings.flightCurves.get(2).fromString(configuration.get("responseCurves", defaultFlightResponseCurve, DEFAULT_CURVE).getString());
 
-        Settings.curveSelected = configuration.get("curveSelection",curveSelection,0).getInt();
         Settings.stateGlobal = Settings.State.valueOf(configuration.get("curveSelection",stateGlobal, Settings.State.Unified.name()).getString());
         Settings.stateMovement = Settings.State.valueOf(configuration.get("curveSelection",stateMovement, Settings.State.Unified.name()).getString());
         Settings.stateFlight = Settings.State.valueOf(configuration.get("curveSelection",stateFlight, Settings.State.Unified.name()).getString());
@@ -87,7 +86,6 @@ public class Config {
         configuration.get("responseCurves",downFlightResponseCurve,"[(0,0)(0.33:0.33)(0.66:0.66)(1,1)]").set(Settings.flightCurves.get(1).toString());
         configuration.get("responseCurves", defaultFlightResponseCurve,"[(0,0)(0.33:0.33)(0.66:0.66)(1,1)]").set(Settings.flightCurves.get(2).toString());
 
-        configuration.get("curveSelection",curveSelection,0).set(Settings.curveSelected);
         configuration.get("curveSelection",stateGlobal, Settings.State.Unified.toString()).set(Settings.stateGlobal.name());
         configuration.get("curveSelection",stateMovement, Settings.State.Unified.toString()).set(Settings.stateMovement.name());
         configuration.get("curveSelection",stateFlight, Settings.State.Unified.toString()).set(Settings.stateFlight.name());

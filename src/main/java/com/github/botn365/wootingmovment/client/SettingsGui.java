@@ -50,7 +50,7 @@ public class SettingsGui extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-        curveSelection = curveSelected;
+        curveSelection = 0;
         val mc = Minecraft.getMinecraft();
         buttonList.add(new GuiButtonState(1,10 + xOffset,10,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
         buttonList.add(new GuiButtonState(2,10 + xOffset,35,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
@@ -342,7 +342,6 @@ public class SettingsGui extends GuiScreen {
             if (child == null) {
                 this.mc.displayGuiScreen((GuiScreen)null);
                 this.mc.setIngameFocus();
-                curveSelected = curveSelection;
                 Config.save();
             } else {
                 this.mc.displayGuiScreen(this);

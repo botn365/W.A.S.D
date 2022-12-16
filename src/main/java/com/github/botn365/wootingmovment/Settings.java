@@ -11,8 +11,6 @@ public class Settings {
     public final static ArrayList<ResponseCurve> movementCurves = new ArrayList<>();
     public final static ArrayList<ResponseCurve> flightCurves = new ArrayList<>();
 
-    public static int curveSelected = 0;
-
     public static boolean movementEnabled = true;
     public static boolean fleightEnabled = true;
     public static boolean hotBarEnabled = true;
