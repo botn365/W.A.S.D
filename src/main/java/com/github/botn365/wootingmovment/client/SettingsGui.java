@@ -2,6 +2,7 @@ package com.github.botn365.wootingmovment.client;
 
 import com.github.botn365.wootingmovment.Config;
 import com.github.botn365.wootingmovment.Settings;
+import com.github.botn365.wootingmovment.WootingInit;
 import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -40,17 +41,23 @@ public class SettingsGui extends GuiScreen {
     int curveSelection = 0;
     GuiScreen child = null;
 
+    GuiSelect keySelection;
+
+    int xOffset = 0;
+    int w = 250;
+
 
     @Override
     public void initGui() {
         super.initGui();
         curveSelection = curveSelected;
         val mc = Minecraft.getMinecraft();
-        buttonList.add(new GuiButtonState(1,10,20,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
-        buttonList.add(new GuiButtonState(2,10,45,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
-        texts.add(new GuiText("Analog movment.",80,27));
-        texts.add(new GuiText("Analog flight.",80,52));
-        initGraphsSetting(70);
+        buttonList.add(new GuiButtonState(1,10 + xOffset,10,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
+        buttonList.add(new GuiButtonState(2,10 + xOffset,35,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
+        texts.add(new GuiText("Analog movment.",80 + xOffset,17));
+        texts.add(new GuiText("Analog flight.",80 + xOffset,42));
+        initGraphsSetting(xOffset,60);
+        initKeySelection(xOffset + 170,10);
     }
 
     @Override
@@ -59,6 +66,7 @@ public class SettingsGui extends GuiScreen {
         super.drawScreen(x,y,z);
         drawText();
         curve.drawScreen(x,y,z);
+        keySelection.drawScreen(x,y,z);
     }
 
     @Override
@@ -125,19 +133,31 @@ public class SettingsGui extends GuiScreen {
 
     }
 
-    protected void initGraphsSetting(int y) {
-        texts.add(new GuiText("Response Curve Settings",10,y+10));
-        texts.add(new GuiText("Global Curve",80,y+30));
-        texts.add(new GuiText("Movement Curve",80,y+55));
-        texts.add(new GuiText("Flight Curve",80,y+80));
-        buttonList.add(new GuiButton(3,10,y + 25,60,20,stateGlobal.name()));
-        movementButton = new GuiButton(4,10,y + 50,60,20,stateMovement.name());
-        flightButton = new GuiButton(5,10,y + 75,60,20,stateFlight.name());
-        decreaseButton = new GuiButton(6,168,y+50,20,20,"<");
-        increaseButton = new GuiButton(7,292,y+50,20,20,">");
-        curve = new ResponseGraphGui(defaultCurve,190,y + 25,100,70,10,"Global Default");
-        buttonList.add(new GuiButton(8,188,y + 100,40,13,"RESRET"));
-        buttonList.add(new GuiButton(9,233,y + 100,60,13,"RESRET ALL"));
+    protected void initKeySelection(int x, int y) {
+        keySelection = new GuiSelect(x,y,140,"Key Board");
+        for (val device : WootingInit.devices) {
+            if (device == null) continue;
+            val dev = new KeyBoardSelect(device);
+            keySelection.addSelection(dev);
+            if (device.deviceId == WootingInit.getDeviceID()) {
+                keySelection.setCurrent(dev);
+            }
+        }
+    }
+
+    protected void initGraphsSetting(int x,int y) {
+        texts.add(new GuiText("Response Curve Settings",10+x,y+10));
+        texts.add(new GuiText("Global Curve",80+x,y+30));
+        texts.add(new GuiText("Movement Curve",80+x,y+55));
+        texts.add(new GuiText("Flight Curve",80+x,y+80));
+        buttonList.add(new GuiButton(3,10+x,y + 25,60,20,stateGlobal.name()));
+        movementButton = new GuiButton(4,10+x,y + 50,60,20,stateMovement.name());
+        flightButton = new GuiButton(5,10+x,y + 75,60,20,stateFlight.name());
+        decreaseButton = new GuiButton(6,168+x,y+50,20,20,"<");
+        increaseButton = new GuiButton(7,292+x,y+50,20,20,">");
+        curve = new ResponseGraphGui(defaultCurve,190+x,y + 25,100,70,10,"Global Default");
+        buttonList.add(new GuiButton(8,188+x,y + 100,40,13,"RESRET"));
+        buttonList.add(new GuiButton(9,233+x,y + 100,60,13,"RESRET ALL"));
         if (stateGlobal == State.Unified) {
             otherButtonState(false);
             decreaseButton.visible = false;
@@ -313,6 +333,7 @@ public class SettingsGui extends GuiScreen {
     protected void mouseClicked(int x1, int y1, int type) {
         super.mouseClicked(x1,y1,type);
         curve.mouseClicked(x1,y1,type);
+        keySelection.mouseClicked(x1,y1,type);
     }
 
     @Override

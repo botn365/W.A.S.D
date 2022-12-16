@@ -14,13 +14,14 @@ public class WootingInit {
 
     public static WootingAnalogDeviceInfoFFI[] devices = new WootingAnalogDeviceInfoFFI[0];
 
-    public static WootingAnalogResult error = WootingAnalogResult_DLLNotFound;
+    public static WootingAnalogResult error = WootingAnalogResult_Ok;
 
     public static void init() {
         val error = wootingAnalogInitialise();
         if (error > 0) {
             setCallBack();
             initialised = pullForDevice();
+            return;
         }
         if (error == 0) {
             setCallBack();
@@ -38,6 +39,7 @@ public class WootingInit {
                     deviceID = -1;
                     initialised = pullForDevice();
                 }
+                return;
             }
             if (ffi.deviceId == deviceID && type == WootingAnalog_DeviceEventType_Disconnected) {
                 deviceID = -1;
@@ -48,6 +50,9 @@ public class WootingInit {
                     initialised = true;
                     WootingInit.error = WootingAnalogResult_Ok;
                 }
+            } else {
+                devices = new WootingAnalogDeviceInfoFFI[4];
+                wootingAnalogGetConnectedDevicesInfo(devices);
             }
         });
     }
@@ -80,5 +85,9 @@ public class WootingInit {
 
     public static long getDeviceID() {
         return deviceID;
+    }
+
+    public static void setDeviceID(long id) {
+        deviceID = id;
     }
 }
