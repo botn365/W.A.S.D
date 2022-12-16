@@ -13,9 +13,9 @@ public class KeyBindings {
 
     protected static final String OPEN_INVENTORY = "key.wootingmovment:open_inventory";
     protected static final String MOVMENT_CATAGORY = "key.wootingmovment:category";
-    protected static final KeyBinding openInventory = new KeyBinding(OPEN_INVENTORY, Keyboard.KEY_RBRACKET, MOVMENT_CATAGORY);
+    protected static final KeyBinding openInventory = new KeyBinding(OPEN_INVENTORY, Keyboard.KEY_LBRACKET, MOVMENT_CATAGORY);
 
-    public static void registerKeyBindfings() {
+    public static void registerKeyBindings() {
         ClientRegistry.registerKeyBinding(openInventory);
         FMLCommonHandler.instance().bus().register(new KeyBindings());
     }

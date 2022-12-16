@@ -8,7 +8,7 @@ public class ClientProxy extends CommonProxy {
     // preInit "Run before anything else. Read your config, create blocks, items,
     // etc, and register them with the GameRegistry."
     public void preInit(FMLPreInitializationEvent event) 	{
-        KeyBindings.registerKeyBindfings();
+        KeyBindings.registerKeyBindings();
         Config.syncronizeConfiguration(event.getSuggestedConfigurationFile());
         WootingInit.init();
     }

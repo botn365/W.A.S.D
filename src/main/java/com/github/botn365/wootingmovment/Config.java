@@ -37,6 +37,9 @@ public class Config {
     public static final String stateMovement = "state_movement";
     public static final String stateFlight = "state_flight";
 
+    public static final String enableMovement = "enable_movement";
+    public static final String enableFlight = "enable_flight";
+
     public static Configuration configuration;
 
     public static final String DEFAULT_CURVE = "[(0:0)(0.33:0.33)(0.66:0.66)(1:1)]";
@@ -62,7 +65,8 @@ public class Config {
         Settings.stateMovement = Settings.State.valueOf(configuration.get("curveSelection",stateMovement, Settings.State.Unified.name()).getString());
         Settings.stateFlight = Settings.State.valueOf(configuration.get("curveSelection",stateFlight, Settings.State.Unified.name()).getString());
 
-
+        Settings.movementEnabled = configuration.get("enable/disable",enableMovement,true).getBoolean();
+        Settings.fleightEnabled = configuration.get("enable/disable",enableFlight,true).getBoolean();
 
         if(configuration.hasChanged()) {
             configuration.save();
@@ -87,6 +91,9 @@ public class Config {
         configuration.get("curveSelection",stateGlobal, Settings.State.Unified.toString()).set(Settings.stateGlobal.name());
         configuration.get("curveSelection",stateMovement, Settings.State.Unified.toString()).set(Settings.stateMovement.name());
         configuration.get("curveSelection",stateFlight, Settings.State.Unified.toString()).set(Settings.stateFlight.name());
+
+         configuration.get("enable/disable",enableMovement,true).set(Settings.movementEnabled);
+         configuration.get("enable/disable",enableFlight,true).set(Settings.fleightEnabled);
 
         configuration.save();
 
