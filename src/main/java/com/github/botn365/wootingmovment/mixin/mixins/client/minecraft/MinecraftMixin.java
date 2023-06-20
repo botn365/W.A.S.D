@@ -1,6 +1,7 @@
 package com.github.botn365.wootingmovment.mixin.mixins.client.minecraft;
 
 import com.github.botn365.main.WootingAnalogWrapper;
+import com.github.botn365.wootingmovment.Settings;
 import com.github.botn365.wootingmovment.WootingInit;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
@@ -49,8 +50,8 @@ public class MinecraftMixin {
                 if (value > oldValues[slot]) {
                     isUp = true;
                     oldValues[slot] = value;
-                } else if (isUp && oldValues[slot] - 0.1 > value) {
-                    if (oldValues[slot] > 0.99) {
+                } else if (isUp && oldValues[slot] - Settings.lowerValueThreshold > value) {
+                    if (oldValues[slot] > Settings.upperValueThreshold) {
                         this.thePlayer.inventory.currentItem = slot;
                     } else {
                         this.thePlayer.inventory.currentItem = Math.min(slot + 9,17);

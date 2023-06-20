@@ -1,7 +1,6 @@
 package com.github.botn365.wootingmovment;
 
 import com.github.botn365.wootingmovment.client.ResponseCurve;
-import com.github.botn365.wootingmovment.client.ResponseGraphGui;
 import lombok.val;
 
 import java.util.ArrayList;
@@ -25,6 +24,9 @@ public class Settings {
     public static int RIGHT = 3;
     public static int UP = 4;
     public static int DOWN = 5;
+
+    public static float upperValueThreshold = 0.95f;
+    public static float lowerValueThreshold = 0.05f;
 
     static {
         addDefaultPoints(defaultCurve);

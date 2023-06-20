@@ -43,6 +43,9 @@ public class Config {
 
     public static final String lastDeviceID = "keyboard_device_id";
 
+    public static final String upperThreshold = "upper_threshold";
+    public static final String lowerThreshold = "lower_threshold";
+
     public static Configuration configuration;
 
     public static final String DEFAULT_CURVE = "[(0:0)(0.33:0.33)(0.66:0.66)(1:1)]";
@@ -62,6 +65,8 @@ public class Config {
         Settings.flightCurves.get(0).fromString(configuration.get("responseCurves",upFlightResponseCurve, DEFAULT_CURVE).getString());
         Settings.flightCurves.get(1).fromString(configuration.get("responseCurves",downFlightResponseCurve, DEFAULT_CURVE).getString());
         Settings.flightCurves.get(2).fromString(configuration.get("responseCurves", defaultFlightResponseCurve, DEFAULT_CURVE).getString());
+        Settings.upperValueThreshold = (float) configuration.get("threshold",upperThreshold,Settings.upperValueThreshold).getDouble();
+        Settings.lowerValueThreshold = (float) configuration.get("threshold",lowerThreshold,Settings.lowerValueThreshold).getDouble();
 
         Settings.stateGlobal = Settings.State.valueOf(configuration.get("curveSelection",stateGlobal, Settings.State.Unified.name()).getString());
         Settings.stateMovement = Settings.State.valueOf(configuration.get("curveSelection",stateMovement, Settings.State.Unified.name()).getString());
@@ -103,6 +108,9 @@ public class Config {
         configuration.get("enable/disable",enableFlight,true).set(Settings.fleightEnabled);
 
         configuration.get("device", lastDeviceID,"-1").set(Long.toString(WootingInit.getDeviceID()));
+
+        configuration.get("threshold",upperThreshold,0.95f).set(Settings.upperValueThreshold);
+        configuration.get("threshold",lowerThreshold,0.05f).set(Settings.lowerValueThreshold);
 
         configuration.save();
 
