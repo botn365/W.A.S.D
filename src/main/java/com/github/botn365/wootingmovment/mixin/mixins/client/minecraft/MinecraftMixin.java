@@ -32,7 +32,7 @@ public class MinecraftMixin {
             ordinal = 2
     ),require = 1)
     public boolean doNothing(KeyBinding instance) {
-        return false;
+        return (!isInit() || !Settings.hotBarEnabled) && instance.isPressed();
     }
 
     @Inject(method = "runTick", at = @At(
