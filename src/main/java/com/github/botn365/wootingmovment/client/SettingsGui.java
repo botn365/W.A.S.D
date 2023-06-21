@@ -30,6 +30,7 @@ public class SettingsGui extends GuiScreen {
     ArrayList<GuiText> texts = new ArrayList<>();
     GuiButton movementButton;
     GuiButton flightButton;
+    GuiButton hotBarButton;
 
     GuiButton increaseButton;
     GuiButton decreaseButton;
@@ -54,9 +55,11 @@ public class SettingsGui extends GuiScreen {
         val mc = Minecraft.getMinecraft();
         buttonList.add(new GuiButtonState(1,10 + xOffset,10,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
         buttonList.add(new GuiButtonState(2,10 + xOffset,35,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
+        buttonList.add(new GuiButtonState(10,10 + xOffset,60,60,20,hotBarEnabled?ENABLED:DISABLED,hotBarEnabled));
         texts.add(new GuiText("Analog movment.",80 + xOffset,17));
         texts.add(new GuiText("Analog flight.",80 + xOffset,42));
-        initGraphsSetting(xOffset,60);
+        texts.add(new GuiText("Analog Hot Bar.",80 + xOffset,67));
+        initGraphsSetting(xOffset,85);
         initKeySelection(xOffset + 170,10);
     }
 
@@ -128,6 +131,12 @@ public class SettingsGui extends GuiScreen {
                 break;
             case 9:
                 resetAllCurves();
+                break;
+            case 10:
+                switchButtonState(button);
+                hotBarEnabled = button.enabled;
+                break;
+            default:
                 break;
         }
 

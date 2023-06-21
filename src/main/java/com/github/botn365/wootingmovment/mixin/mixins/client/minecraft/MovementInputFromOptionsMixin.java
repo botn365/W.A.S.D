@@ -2,6 +2,7 @@ package com.github.botn365.wootingmovment.mixin.mixins.client.minecraft;
 
 import com.github.botn365.wootingmovment.Settings;
 import com.github.botn365.wootingmovment.WootingInit;
+import com.github.botn365.wootingmovment.WootingMovment;
 import lombok.val;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.MovementInput;
@@ -12,7 +13,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalogDevice;
+import java.util.Arrays;
+
+import static com.github.botn365.main.WootingAnalogWrapper.*;
 import static com.github.botn365.wootingmovment.Settings.*;
 import static net.minecraft.client.Minecraft.getMinecraft;
 
@@ -31,14 +34,32 @@ abstract class MovementInputFromOptionsMixin extends MovementInput {
         }
     }
 
+    private static int TICK_VALUE = 0;
+
     private void wootingMovment() {
+//        float[] floats = new float[16];
+//        short[] shorts = new short[16];
+//
+//        if (++TICK_VALUE%10 == 0) {
+//            int ret = wootingAnalogReadFullBuffer(shorts,floats);
+//            WootingMovment.info("Wooting debug print "+ret);
+//            WootingMovment.info(Arrays.toString(floats));
+//            WootingMovment.info(Arrays.toString(shorts));
+//            WootingMovment.info("W:"+gameSettings.keyBindForward.getKeyCode()+"  S:"+gameSettings.keyBindBack.getKeyCode()+"   A:"+gameSettings.keyBindLeft.getKeyCode()+"   D:"+gameSettings.keyBindRight.getKeyCode());
+//        }
+
+
         val deviceID = WootingInit.getDeviceID();
         this.moveForward = 0;
         this.moveStrafe = 0;
-        float w = getResponseCurve(FORWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID));
-        float s = getResponseCurve(BACKWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID));
-        float a = getResponseCurve(LEFT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID));
-        float d = getResponseCurve(RIGHT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID));
+        float w = getResponseCurve(FORWARD).translate(wootingAnalogReadAnalog(gameSettings.keyBindForward.getKeyCode()));
+        float s = getResponseCurve(BACKWARD).translate(wootingAnalogReadAnalog(gameSettings.keyBindBack.getKeyCode()));
+        float a = getResponseCurve(LEFT).translate(wootingAnalogReadAnalog(gameSettings.keyBindLeft.getKeyCode()));
+        float d = getResponseCurve(RIGHT).translate(wootingAnalogReadAnalog(gameSettings.keyBindRight.getKeyCode()));
+//        if (TICK_VALUE%10 == 0) {
+//            WootingMovment.info(""+w+" "+s+" "+a+" "+d);
+//        }
+
         if (w > 0.05) {
             this.moveForward += w;
         }

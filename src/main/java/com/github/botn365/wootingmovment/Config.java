@@ -40,6 +40,7 @@ public class Config {
 
     public static final String enableMovement = "enable_movement";
     public static final String enableFlight = "enable_flight";
+    public static final String hotBarEnabled = "enable_hot_bar";
 
     public static final String lastDeviceID = "keyboard_device_id";
 
@@ -74,6 +75,7 @@ public class Config {
 
         Settings.movementEnabled = configuration.get("enable/disable",enableMovement,true).getBoolean();
         Settings.fleightEnabled = configuration.get("enable/disable",enableFlight,true).getBoolean();
+        Settings.hotBarEnabled = configuration.get("enable/disable",hotBarEnabled,true).getBoolean();
 
         try {
             val st = configuration.get("device", lastDeviceID,"-1").getString();
@@ -106,6 +108,7 @@ public class Config {
 
         configuration.get("enable/disable",enableMovement,true).set(Settings.movementEnabled);
         configuration.get("enable/disable",enableFlight,true).set(Settings.fleightEnabled);
+        configuration.get("enable/disable",hotBarEnabled,true).set(Settings.hotBarEnabled);
 
         configuration.get("device", lastDeviceID,"-1").set(Long.toString(WootingInit.getDeviceID()));
 

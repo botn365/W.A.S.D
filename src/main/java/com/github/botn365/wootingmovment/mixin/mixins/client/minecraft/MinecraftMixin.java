@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 
+import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalog;
 import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalogDevice;
 import static com.github.botn365.wootingmovment.WootingInit.*;
 
@@ -42,11 +43,11 @@ public class MinecraftMixin {
             ordinal = 0),
             require = 1)
     public void analogItemSelect(CallbackInfo ci) {
-        if (isInit()) {
+        if (isInit() && Settings.hotBarEnabled) {
             for (int slot = 0; slot < 9; ++slot)
             {
                 int keyCode = this.gameSettings.keyBindsHotbar[slot].getKeyCode();
-                float value = wootingAnalogReadAnalogDevice(keyCode,getDeviceID());
+                float value = wootingAnalogReadAnalog(keyCode);
                 if (value > oldValues[slot]) {
                     isUp = true;
                     oldValues[slot] = value;
