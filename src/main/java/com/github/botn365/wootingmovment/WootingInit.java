@@ -17,7 +17,7 @@ public class WootingInit {
     public static WootingAnalogResult error = WootingAnalogResult_Ok;
 
     public static void init() {
-        val error = wootingAnalogInitialise();
+        int error = wootingAnalogIsInitialised() ? WootingAnalogResult_Ok.value : wootingAnalogInitialise();
         if (error > 0) {
             setCallBack();
             initialised = pullForDevice();
@@ -27,7 +27,7 @@ public class WootingInit {
             setCallBack();
             WootingInit.error = WootingAnalogResult_NoDevices;
         } else {
-            WootingInit.error = WootingAnalogResult_Ok.fromInt(error);
+            WootingInit.error = fromInt(error);
         }
     }
 
