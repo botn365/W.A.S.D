@@ -47,7 +47,7 @@ public class MinecraftMixin {
             for (int slot = 0; slot < 9; ++slot)
             {
                 int keyCode = this.gameSettings.keyBindsHotbar[slot].getKeyCode();
-                float value = wootingAnalogReadAnalog(keyCode);
+                float value = wootingAnalogReadAnalogDevice(keyCode,getDeviceID());
                 if (value > oldValues[slot]) {
                     isUp = true;
                     oldValues[slot] = value;
