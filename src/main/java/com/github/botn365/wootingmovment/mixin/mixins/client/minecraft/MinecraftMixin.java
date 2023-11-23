@@ -44,24 +44,32 @@ public class MinecraftMixin {
             require = 1)
     public void analogItemSelect(CallbackInfo ci) {
         if (isInit() && Settings.hotBarEnabled) {
-            for (int slot = 0; slot < 9; ++slot)
+            for (int slot = 0; slot < 5; ++slot)
             {
                 int keyCode = this.gameSettings.keyBindsHotbar[slot].getKeyCode();
                 float value = wootingAnalogReadAnalogDevice(keyCode,getDeviceID());
-                if (value > oldValues[slot]) {
-                    isUp = true;
-                    oldValues[slot] = value;
-                } else if (isUp && oldValues[slot] - Settings.lowerValueThreshold > value) {
-                    if (oldValues[slot] > Settings.upperValueThreshold) {
-                        this.thePlayer.inventory.currentItem = slot;
-                    } else {
-                        this.thePlayer.inventory.currentItem = Math.min(slot + 9,17);
-                    }
-                    oldValues[slot] = value;
+
+                if (value == 0) {
                     isUp = false;
-                } else if (value == 0) {
-                    oldValues[slot] = value;
+                    oldValues[slot] = 0;
+                    continue;
                 }
+                if (value < oldValues[slot]) {
+                    isUp = true;
+                    continue;
+                }
+
+                if (value < 0.34) {
+                    this.thePlayer.inventory.currentItem = Math.min(slot + 15,17);
+                } else if (value < 0.66) {
+                    this.thePlayer.inventory.currentItem = slot + 10;
+                } else if (value < 0.98) {
+                    this.thePlayer.inventory.currentItem = slot + 5;
+                } else {
+                    this.thePlayer.inventory.currentItem = slot;
+                }
+
+                oldValues[slot] = value;
             }
         }
     }

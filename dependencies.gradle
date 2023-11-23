@@ -1,6 +1,7 @@
 // Add your dependencies here
 
 dependencies {
+    implementation("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
     compileOnly("org.projectlombok:lombok:1.18.22") {
         transitive = false
     }

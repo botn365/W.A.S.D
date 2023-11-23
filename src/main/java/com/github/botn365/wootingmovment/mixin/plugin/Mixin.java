@@ -13,8 +13,7 @@ import java.util.function.Predicate;
 
 import static com.falsepattern.lib.mixin.IMixin.PredicateHelpers.*;
 import static com.github.botn365.main.WootingAnalogWrapper.WootingAnalogResult.*;
-import static com.github.botn365.wootingmovment.mixin.plugin.TargetedMod.DWS;
-import static com.github.botn365.wootingmovment.mixin.plugin.TargetedMod.PLAYERAPI;
+import static com.github.botn365.wootingmovment.mixin.plugin.TargetedMod.*;
 
 @RequiredArgsConstructor
 public enum Mixin implements IMixin {
@@ -31,12 +30,16 @@ public enum Mixin implements IMixin {
     MovementMixin(Side.CLIENT, condition(Mixin::hasSDK), "minecraft.MovementInputFromOptionsMixin"),
     FleightMixin(Side.CLIENT,avoid(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPMixin"),
     FleightMixinPlayerApi(Side.CLIENT,require(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPPlayerApiMixin"),
-    DWSAnalogSelect(Side.CLIENT,require(DWS).and(condition(Mixin::hasSDK)),"minecraft.MinecraftMixin")
+    DWSAnalogSelect(Side.CLIENT,require(DWS).and(condition(Mixin::hasSDK)),"minecraft.MinecraftMixin"),
+    IC2JetPack(Side.CLIENT,require(IC2).and(condition(Mixin::hasSDK)),"ic2.ItemArmorJetpackMixin")
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and match multiple predicates.
     ;
     //
 
     private static boolean hasSDK() {
+        if (WootingAnalogWrapper.wootingAnalogIsInitialised()) {
+            return true;
+        }
         val value = WootingAnalogWrapper.wootingAnalogInitialise();
         if (value <= -1990 && value >= -1997) {
             WootingMovment.warn("Error initialising SDK "+WootingAnalogResult_Failure.fromInt(value).name());

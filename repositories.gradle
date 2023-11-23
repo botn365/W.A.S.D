@@ -2,6 +2,14 @@
 
 repositories {
     maven {
+        name = "ic2"
+        url = "https://mvn.falsepattern.com/ic2/"
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+    maven {
         name = "FalsePattern GTMEGA Maven"
         url = "https://mvn.falsepattern.com/gtmega_releases/"
     }

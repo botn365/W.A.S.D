@@ -29,9 +29,9 @@ public abstract class EntitiyPlayerSPMixin extends AbstractClientPlayer {
     public boolean cancelFleigtMovment(boolean original) {
         if (original && WootingInit.isInit() && this.mc.currentScreen == null && Settings.fleightEnabled) {
             val deviceID = WootingInit.getDeviceID();
-            val f = getResponseCurve(UP).translate(wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindJump.getKeyCode(),deviceID));
+            val f = getResponseCurve(UP).translate(wootingAnalogReadAnalog(this.mc.gameSettings.keyBindJump.getKeyCode()));
             this.motionY += f * 0.15;
-            this.motionY -= getResponseCurve(DOWN).translate(wootingAnalogReadAnalogDevice(this.mc.gameSettings.keyBindSneak.getKeyCode(),deviceID)) * 0.15;
+            this.motionY -= getResponseCurve(DOWN).translate(wootingAnalogReadAnalog(this.mc.gameSettings.keyBindSneak.getKeyCode())) * 0.15;
             return false;
         }
         return original;

@@ -42,10 +42,10 @@ abstract class MovementInputFromOptionsMixin extends MovementInput {
         val deviceID = WootingInit.getDeviceID();
         this.moveForward = 0;
         this.moveStrafe = 0;
-        float w = getResponseCurve(FORWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindForward.getKeyCode(),deviceID));
-        float s = getResponseCurve(BACKWARD).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindBack.getKeyCode(),deviceID));
-        float a = getResponseCurve(LEFT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindLeft.getKeyCode(),deviceID));
-        float d = getResponseCurve(RIGHT).translate(wootingAnalogReadAnalogDevice(gameSettings.keyBindRight.getKeyCode(),deviceID));
+        float w = getResponseCurve(FORWARD).translate(wootingAnalogReadAnalog(gameSettings.keyBindForward.getKeyCode()));
+        float s = getResponseCurve(BACKWARD).translate(wootingAnalogReadAnalog(gameSettings.keyBindBack.getKeyCode()));
+        float a = getResponseCurve(LEFT).translate(wootingAnalogReadAnalog(gameSettings.keyBindLeft.getKeyCode()));
+        float d = getResponseCurve(RIGHT).translate(wootingAnalogReadAnalog(gameSettings.keyBindRight.getKeyCode()));
 
         if (w > 0.05) {
             this.moveForward += w;

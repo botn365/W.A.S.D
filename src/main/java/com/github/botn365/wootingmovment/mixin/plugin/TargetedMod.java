@@ -19,6 +19,7 @@ public enum TargetedMod implements ITargetedMod {
 
     PLAYERAPI("PlayerApi",false,startsWith("PlayerApi")),
     DWS("dws",false,startsWith("dws-")),
+    IC2("ic2",true,startsWith("industrialcraft-2-2.2"))
 
     // Replace with your injected mods here:
     ;
