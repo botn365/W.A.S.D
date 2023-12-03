@@ -14,6 +14,7 @@ import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fluids.Fluid;
 import org.lwjgl.Sys;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import static com.github.botn365.main.WootingAnalogWrapper.wootingAnalogReadAnalog;
 import static com.github.botn365.wootingmovment.Settings.*;
 
 @Mixin(value = ItemArmorJetpack.class)
@@ -38,7 +40,8 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
 
     @Redirect(method = "onArmorTick", at = @At(value = "INVOKE",target = "Lic2/core/item/armor/ItemArmorJetpack;useJetpack(Lnet/minecraft/entity/player/EntityPlayer;Z)Z"),require = 1,remap = false)
     private boolean useWootingJetpack(ItemArmorJetpack instance, EntityPlayer player, boolean hoverMode) {
-        float spaceBarValue = getResponseCurve(UP).translate(WootingAnalogWrapper.wootingAnalogReadAnalog(Minecraft.getMinecraft().gameSettings.keyBindJump.getKeyCode()));
+        val settings = Minecraft.getMinecraft().gameSettings;
+        float spaceBarValue = getResponseCurve(UP).translate(WootingAnalogWrapper.wootingAnalogReadAnalog(settings.keyBindJump.getKeyCode()));
         if (spaceBarValue <= 0 && !hoverMode) {
             return false;
         } else if (!hoverMode && Minecraft.getMinecraft().currentScreen != null) {
@@ -105,7 +108,7 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
                     }
                 }
 
-                val sneakFloat = getResponseCurve(DOWN).translate(WootingAnalogWrapper.wootingAnalogReadAnalog(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode()));
+                val sneakFloat = getResponseCurve(DOWN).translate(WootingAnalogWrapper.wootingAnalogReadAnalog(settings.keyBindSneak.getKeyCode()));
 
                 if (sneakFloat > 0) {
                     if (electric) {
