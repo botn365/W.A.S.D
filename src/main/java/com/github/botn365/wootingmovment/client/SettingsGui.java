@@ -56,7 +56,7 @@ public class SettingsGui extends GuiScreen {
         buttonList.add(new GuiButtonState(1,10 + xOffset,10,60,20,movementEnabled?ENABLED:DISABLED,movementEnabled));
         buttonList.add(new GuiButtonState(2,10 + xOffset,35,60,20,fleightEnabled?ENABLED:DISABLED,fleightEnabled));
         buttonList.add(new GuiButtonState(10,10 + xOffset,60,60,20,hotBarEnabled?ENABLED:DISABLED,hotBarEnabled));
-        texts.add(new GuiText("Analog movment.",80 + xOffset,17));
+        texts.add(new GuiText("Analog movement.",80 + xOffset,17));
         texts.add(new GuiText("Analog flight.",80 + xOffset,42));
         texts.add(new GuiText("Analog Hot Bar.",80 + xOffset,67));
         initGraphsSetting(xOffset,85);
@@ -165,8 +165,8 @@ public class SettingsGui extends GuiScreen {
         decreaseButton = new GuiButton(6,168+x,y+50,20,20,"<");
         increaseButton = new GuiButton(7,292+x,y+50,20,20,">");
         curve = new ResponseGraphGui(defaultCurve,190+x,y + 25,100,70,10,"Global Default");
-        buttonList.add(new GuiButton(8,188+x,y + 100,40,13,"RESRET"));
-        buttonList.add(new GuiButton(9,233+x,y + 100,60,13,"RESRET ALL"));
+        buttonList.add(new GuiButton(8,188+x,y + 100,40,13,"RESET"));
+        buttonList.add(new GuiButton(9,233+x,y + 100,60,13,"RESET ALL"));
         if (stateGlobal == State.Unified) {
             otherButtonState(false);
             decreaseButton.visible = false;
