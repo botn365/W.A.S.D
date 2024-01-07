@@ -95,7 +95,6 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
                 player.motionY = 0;
             }
             player.motionY = Math.min(player.motionY + (double)(power * 0.2F), 0.6000000238418579);
-            System.out.println(player.motionY);
             player.fallDistance = 0;
             if (hoverMode) {
 
