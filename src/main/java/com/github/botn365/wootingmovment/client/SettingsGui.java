@@ -31,7 +31,6 @@ public class SettingsGui extends GuiScreen {
     GuiButton movementButton;
     GuiButton flightButton;
     GuiButton hotBarButton;
-
     GuiButton increaseButton;
     GuiButton decreaseButton;
     /*
