@@ -25,16 +25,6 @@ import static com.github.botn365.wootingmovment.WootingInit.*;
 @Mixin(value = Minecraft.class)
 public class MinecraftMixin {
 
-
-    @Redirect(method = "runTick", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/settings/KeyBinding;isPressed()Z",
-            ordinal = 2
-    ),require = 1)
-    public boolean doNothing(KeyBinding instance) {
-        return (!isInit() || !Settings.hotBarEnabled) && instance.isPressed();
-    }
-
     @Inject(method = "runTick", at = @At(
             value = "FIELD",
             target = "Lnet/minecraft/client/settings/GameSettings;chatVisibility:Lnet/minecraft/entity/player/EntityPlayer$EnumChatVisibility;",
