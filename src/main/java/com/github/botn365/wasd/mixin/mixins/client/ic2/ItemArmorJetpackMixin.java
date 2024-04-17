@@ -2,6 +2,7 @@ package com.github.botn365.wasd.mixin.mixins.client.ic2;
 
 
 import com.github.botn365.main.WootingAnalogWrapper;
+import com.github.botn365.wasd.Settings;
 import com.github.botn365.wasd.WASDInit;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import ic2.core.IC2;
@@ -27,15 +28,18 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
         super(internalName, armorName, allowfluid, capacity);
     }
 
-    @ModifyExpressionValue(method = "onArmorTick", at = @At(value = "INVOKE",target = "Lic2/core/util/Keyboard;isJumpKeyDown(Lnet/minecraft/entity/player/EntityPlayer;)Z"),require = 1,remap = false)
+    @ModifyExpressionValue(method = "onArmorTick", at = @At(value = "INVOKE",target = "Lic2/core/util/Keyboard;isJumpKeyDown(Lnet/minecraft/entity/player/EntityPlayer;)Z",ordinal = 1),require = 1,remap = false)
     public boolean setPowerAnalog(boolean original) {
-        if (!WASDInit.isInit()) return original;
+        if (!WASDInit.isInit() || !fleightEnabled) return original;
         return true;
     }
 
 
     @Redirect(method = "onArmorTick", at = @At(value = "INVOKE",target = "Lic2/core/item/armor/ItemArmorJetpack;useJetpack(Lnet/minecraft/entity/player/EntityPlayer;Z)Z"),require = 1,remap = false)
     private boolean useWootingJetpack(ItemArmorJetpack instance, EntityPlayer player, boolean hoverMode) {
+        if (!fleightEnabled)
+            return instance.useJetpack(player,hoverMode);
+
         val settings = Minecraft.getMinecraft().gameSettings;
         float spaceBarValue = getResponseCurve(UP).translate(WootingAnalogWrapper.wootingAnalogReadAnalog(settings.keyBindJump.getKeyCode()));
         if (spaceBarValue <= 0 && !hoverMode) {
@@ -51,7 +55,7 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
             float power = spaceBarValue;
             float dropPercentage = 0.2F;
             if (electric) {
-                power = 0.7F;
+                power = spaceBarValue * 0.7F;
                 dropPercentage = 0.05F;
             }
 
@@ -131,7 +135,7 @@ public abstract class ItemArmorJetpackMixin extends ItemArmorFluidTank {
             }
 
             if (!player.onGround) {
-                this.use(jetpack, (double)consume);
+                this.use(jetpack, consume);
             }
 
             player.fallDistance = 0.0F;
