@@ -13,13 +13,13 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyBindings {
 
-    protected static final String OPEN_INVENTORY = "key.wootingmovment:open_inventory";
-    protected static final String MOVMENT_CATAGORY = "key.wootingmovment:category";
-    protected static final KeyBinding openInventory = new KeyBinding(OPEN_INVENTORY, Keyboard.KEY_LBRACKET, MOVMENT_CATAGORY);
+    protected static final String OPEN_INVENTORY = "WASD Open Inventory";
+    protected static final String MOVMENT_CATAGORY = "key.wasd:category";
+    protected final KeyBinding openInventory = new KeyBinding(OPEN_INVENTORY, Keyboard.KEY_LBRACKET, MOVMENT_CATAGORY);
 
-    public static void registerKeyBindings() {
+    public KeyBindings() {
         ClientRegistry.registerKeyBinding(openInventory);
-        FMLCommonHandler.instance().bus().register(new KeyBindings());
+        FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent

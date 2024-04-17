@@ -1,5 +1,6 @@
 package com.github.botn365.wasd.client;
 
+import com.github.botn365.wasd.ClientProxy;
 import com.github.botn365.wasd.Config;
 import com.github.botn365.wasd.Settings;
 import com.github.botn365.wasd.WASDInit;
@@ -348,7 +349,7 @@ public class SettingsGui extends GuiScreen {
 
     @Override
     protected void keyTyped(char p_73869_1_, int key) {
-        if (key == 1 || key == KeyBindings.openInventory.getKeyCode()) {
+        if (key == 1 || key == ClientProxy.keyBindings.openInventory.getKeyCode()) {
             if (child == null) {
                 this.mc.displayGuiScreen((GuiScreen)null);
                 this.mc.setIngameFocus();

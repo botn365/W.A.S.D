@@ -5,17 +5,19 @@ import cpw.mods.fml.common.event.*;
 
 public class ClientProxy extends CommonProxy {
 
+    public static KeyBindings keyBindings;
+
     // preInit "Run before anything else. Read your config, create blocks, items,
     // etc, and register them with the GameRegistry."
     public void preInit(FMLPreInitializationEvent event) 	{
         WASDInit.init();
-        KeyBindings.registerKeyBindings();
         Config.syncronizeConfiguration(event.getSuggestedConfigurationFile());
     }
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes."
     public void init(FMLInitializationEvent event) {
         super.init(event);
+        keyBindings = new KeyBindings();
     }
 
     // postInit "Handle interaction with other mods, complete your setup based on this."

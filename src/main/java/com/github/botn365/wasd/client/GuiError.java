@@ -1,5 +1,6 @@
 package com.github.botn365.wasd.client;
 
+import com.github.botn365.wasd.ClientProxy;
 import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -40,7 +41,7 @@ public class GuiError extends GuiScreen {
 
     @Override
     protected void keyTyped(char p_73869_1_, int key) {
-        if (key == 1 || key == KeyBindings.openInventory.getKeyCode()) {
+        if (key == 1 || key == ClientProxy.keyBindings.openInventory.getKeyCode()) {
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();
         }
