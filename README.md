@@ -9,8 +9,10 @@
 Allows you to move like playing with a controller but on keyboard
 
 ## Requirements
-Needs a wooting keyboard.
+- Needs a wooting keyboard.<br>
+  Needs the Analog sdk to be installed. https://github.com/WootingKb/wooting-analog-sdk <br>
+  (Wootility on windows will install this for you on linux needs to be installed manually) <br>
+- unimixins https://github.com/LegacyModdingMC/UniMixins
+- falsepattern lib https://github.com/FalsePattern/FalsePatternLib
 
-Needs the Analog sdk to be installed. https://github.com/WootingKb/wooting-analog-sdk <br>
-(Wootility on windows will install this for you on linux needs to be installed manually)
 

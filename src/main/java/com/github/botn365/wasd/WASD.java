@@ -11,7 +11,9 @@ import org.apache.logging.log4j.Logger;
      name = Tags.MODNAME,
      acceptedMinecraftVersions = "[1.7.10]",
      //acceptableRemoteVersions = "*",
-     dependencies = "required-after:falsepatternlib@[0.5.0,);")
+     dependencies = "required-after:falsepatternlib@[0.5.0,);"
+                    +"required-after:unimixins;"
+)
 public class WASD {
 
     private static Logger LOG = LogManager.getLogger(Tags.MODID);
