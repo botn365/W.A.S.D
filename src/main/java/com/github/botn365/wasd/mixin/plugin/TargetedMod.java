@@ -19,8 +19,8 @@ public enum TargetedMod implements ITargetedMod {
 
     PLAYERAPI("PlayerApi",false,startsWith("PlayerApi")),
     DWS("dws",false,startsWith("dws-")),
-    IC2("ic2",true,startsWith("industrialcraft-2-2.2"))
-
+    IC2("ic2",true,startsWith("industrialcraft-2-2.2")),
+    THAUMCRAFT("thaumcraft",false,startsWith("Thaumcraft-1.7.10"))
     // Replace with your injected mods here:
     ;
 

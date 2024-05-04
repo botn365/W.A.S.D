@@ -1,4 +1,16 @@
 // Add your dependencies here
+static def curse(curseDep) {
+    return "curse.maven:" + curseDep
+}
+
+def deobfCurse(curseDep) {
+    try {
+        return deobfMaven("https://cursemaven.com/", curse(curseDep))
+    } catch (Exception ignored) {
+        println("Failed to get dep " + curseDep + " from cursemaven. Grabbing from mirror.")
+        return deobfMaven("https://mvn.falsepattern.com/cursemaven/", curse(curseDep))
+    }
+}
 
 dependencies {
     implementation("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
@@ -10,4 +22,7 @@ dependencies {
     shadeCompile(files("libs/WootinAnalogJavaWrapper-1.6.jar"))
 
     compile("com.falsepattern:falsepatternlib-mc1.7.10:0.5.0:dev")
+
+    // Thaumcraft 4.2.3.5
+    compileOnly(deobfCurse("thaumcraft-223628:2227552"))
 }

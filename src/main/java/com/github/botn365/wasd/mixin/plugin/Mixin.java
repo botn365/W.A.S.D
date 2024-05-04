@@ -31,7 +31,8 @@ public enum Mixin implements IMixin {
     FleightMixin(Side.CLIENT,avoid(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPMixin"),
     FleightMixinPlayerApi(Side.CLIENT,require(PLAYERAPI).and(condition(Mixin::hasSDK)),"minecraft.EntitiyPlayerSPPlayerApiMixin"),
     DWSAnalogSelect(Side.CLIENT,require(DWS).and(condition(Mixin::hasSDK)),"minecraft.MinecraftMixin"),
-    IC2JetPack(Side.CLIENT,require(IC2).and(condition(Mixin::hasSDK)),"ic2.ItemArmorJetpackMixin")
+    IC2JetPack(Side.CLIENT,require(IC2).and(condition(Mixin::hasSDK)),"ic2.ItemArmorJetpackMixin"),
+    Thaumcraft(Side.CLIENT,require(THAUMCRAFT),"thaumcraft.ItemBootsTravellerMixin")
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and match multiple predicates.
     ;
     //
