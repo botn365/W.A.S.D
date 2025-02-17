@@ -18,11 +18,8 @@ dependencies {
         transitive = false
     }
     annotationProcessor("org.projectlombok:lombok:1.18.22")
-
-    shadeCompile(files("libs/WootinAnalogJavaWrapper-1.6.jar"))
-
+    shadeCompile(files("libs/WootinAnalogJavaWrapper-1.7.jar"))
     compile("com.falsepattern:falsepatternlib-mc1.7.10:0.5.0:dev")
-
     // Thaumcraft 4.2.3.5
     compileOnly(deobfCurse("thaumcraft-223628:2227552"))
 }
